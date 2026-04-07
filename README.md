@@ -51,6 +51,19 @@ It explores a simple idea: instead of writing long, fragile prompt text for vibe
 - [program_flow.mmd](program_flow.mmd)  
   这个项目程序本身的运行流程图，描述启动、编辑、导入导出和端口交互。
 
+## 程序界面截图
+
+![程序运行界面](UI_snapshot.png)
+
+## 这次有趣实践：按程序流程图重实现
+
+这次做了一个小实验：只根据 [program_flow.mmd](program_flow.mmd) 的运行流程描述，在 [flow_rebuild](flow_rebuild) 里重新实现了一版可运行原型，用来验证“先流程图、后代码”的可用性。
+
+- 重实现入口： [flow_rebuild/main.py](flow_rebuild/main.py)
+- 重实现主逻辑： [flow_rebuild/app/editor_window.py](flow_rebuild/app/editor_window.py)
+- 重实现图形层： [flow_rebuild/app/graphics_items.py](flow_rebuild/app/graphics_items.py)
+- 重实现流程图： [flow_rebuild/program_flow.mmd](flow_rebuild/program_flow.mmd)
+
 ## 项目结构
 
 - [main.py](main.py) 入口文件。
@@ -112,6 +125,7 @@ python main.py
 - 仍然只是原型，交互和视觉都比较朴素。
 - 适合做思路验证，不适合直接当成完整的生产级编辑器。
 - Mermaid 导入导出能力仍然依赖当前实现的元数据格式。
+- 本仓库代码几乎全部由 GitHub Copilot（GPT-5.3-Codex）在 vibe coding 方式下生成，未经过系统性人工审查，请不要对“vibe coding 史山”抱有过高期待。
 
 ## 许可证
 

@@ -1,0 +1,64 @@
+flowchart LR
+  N1(["main.py<br/><sub>Application entry point</sub><br/><sub>OUT: run()</sub>"])
+  N2["run()<br/><sub>Create QApplication and MermaidFlowEditor</sub><br/><sub>IN: main.py</sub><br/><sub>OUT: Qt event loop</sub>"]
+  N3[["MermaidFlowEditor.__init__()<br/><sub>Build scene, docks, toolbar, preview</sub><br/><sub>OUT: ready editor</sub>"]]
+  N4["FlowGraphicsView<br/><sub>Mouse hover/click forwarding</sub><br/><sub>OUT: port interaction</sub>"]
+  N5[/"QGraphicsScene + NodeItem/EdgeItem<br/><sub>Node/edge render and state container</sub><br/><sub>OUT: graph state</sub>"/]
+  N6["Port Connect Mode<br/><sub>Output -> input with preview/highlight</sub><br/><sub>IN: mouse events</sub><br/><sub>OUT: EdgeItem</sub>"]
+  N7["Property Dock<br/><sub>Edit selected node fields and size</sub><br/><sub>IN: selected node</sub><br/><sub>OUT: updated node</sub>"]
+  N8{{"Import/Export Mermaid<br/><sub>Load/save .mmd with metadata when present</sub><br/><sub>OUT: project mmd</sub>"}}
+  N9{{"Mermaid Preview<br/><sub>Show generate_mermaid() output</sub><br/><sub>OUT: current mermaid text</sub>"}}
+
+  %% I/O Connections
+  N1 --|"run() -> main.py"|--> N2
+  N2 --|"Qt event loop -> ready editor"|--> N3
+  N3 --|"ready editor -> port interaction"|--> N4
+  N3 --|"ready editor -> graph state"|--> N5
+  N3 --|"ready editor -> selected node"|--> N7
+  N3 --|"ready editor -> project mmd"|--> N8
+  N4 --|"port interaction -> mouse events"|--> N6
+  N6 --|"EdgeItem -> graph state"|--> N5
+  N7 --|"updated node -> graph state"|--> N5
+  N8 --|"project mmd -> graph state"|--> N5
+  N5 --|"graph state -> current mermaid text"|--> N9
+
+  %% Style classes
+  classDef cls_program fill:#1b9aaa22,stroke:#1b9aaa,stroke-width:2px;
+  classDef cls_module fill:#2f7d3222,stroke:#2f7d32,stroke-width:2px;
+  classDef cls_class fill:#3a6ea522,stroke:#3a6ea5,stroke-width:2px;
+  classDef cls_struct fill:#6c4ab622,stroke:#6c4ab6,stroke-width:2px;
+  classDef cls_function fill:#cf5c3622,stroke:#cf5c36,stroke-width:2px;
+  classDef cls_interface fill:#9a031e22,stroke:#9a031e,stroke-width:2px;
+  classDef cls_process fill:#7b6d2622,stroke:#7b6d26,stroke-width:2px;
+  class N1 cls_interface;
+  class N2 cls_function;
+  class N3 cls_class;
+  class N4 cls_class;
+  class N5 cls_module;
+  class N6 cls_process;
+  class N7 cls_process;
+  class N8 cls_interface;
+  class N9 cls_interface;
+
+  %% VC_METADATA_BEGIN
+  %% VC_NODE {"id": "N1", "type": "interface", "title": "main.py", "description": "Application entry point", "inputs": [], "outputs": ["run()"], "members": [], "x": -650.0, "y": -40.0, "w": 220.0, "h": 110.0, "parent": null}
+  %% VC_NODE {"id": "N2", "type": "function", "title": "run()", "description": "Create QApplication and MermaidFlowEditor", "inputs": ["main.py"], "outputs": ["Qt event loop"], "members": [], "x": -360.0, "y": -40.0, "w": 270.0, "h": 120.0, "parent": null}
+  %% VC_NODE {"id": "N3", "type": "class", "title": "MermaidFlowEditor.__init__()", "description": "Build scene, docks, toolbar, preview", "inputs": [], "outputs": ["ready editor"], "members": [], "x": -40.0, "y": -40.0, "w": 300.0, "h": 120.0, "parent": null}
+  %% VC_NODE {"id": "N4", "type": "class", "title": "FlowGraphicsView", "description": "Mouse hover/click forwarding", "inputs": [], "outputs": ["port interaction"], "members": [], "x": 300.0, "y": -170.0, "w": 250.0, "h": 110.0, "parent": null}
+  %% VC_NODE {"id": "N5", "type": "module", "title": "QGraphicsScene + NodeItem/EdgeItem", "description": "Node/edge render and state container", "inputs": [], "outputs": ["graph state"], "members": [], "x": 300.0, "y": -20.0, "w": 330.0, "h": 130.0, "parent": null}
+  %% VC_NODE {"id": "N6", "type": "process", "title": "Port Connect Mode", "description": "Output -> input with preview/highlight", "inputs": ["mouse events"], "outputs": ["EdgeItem"], "members": [], "x": 610.0, "y": -170.0, "w": 260.0, "h": 120.0, "parent": null}
+  %% VC_NODE {"id": "N7", "type": "process", "title": "Property Dock", "description": "Edit selected node fields and size", "inputs": ["selected node"], "outputs": ["updated node"], "members": [], "x": 610.0, "y": -20.0, "w": 250.0, "h": 120.0, "parent": null}
+  %% VC_NODE {"id": "N8", "type": "interface", "title": "Import/Export Mermaid", "description": "Load/save .mmd with metadata when present", "inputs": [], "outputs": ["project mmd"], "members": [], "x": 610.0, "y": 130.0, "w": 270.0, "h": 120.0, "parent": null}
+  %% VC_NODE {"id": "N9", "type": "interface", "title": "Mermaid Preview", "description": "Show generate_mermaid() output", "inputs": [], "outputs": ["current mermaid text"], "members": [], "x": 920.0, "y": -20.0, "w": 250.0, "h": 120.0, "parent": null}
+  %% VC_EDGE {"source": "N1", "target": "N2", "source_port": "run()", "target_port": "main.py", "label": "run() -> main.py"}
+  %% VC_EDGE {"source": "N2", "target": "N3", "source_port": "Qt event loop", "target_port": "ready editor", "label": "Qt event loop -> ready editor"}
+  %% VC_EDGE {"source": "N3", "target": "N4", "source_port": "ready editor", "target_port": "port interaction", "label": "ready editor -> port interaction"}
+  %% VC_EDGE {"source": "N3", "target": "N5", "source_port": "ready editor", "target_port": "graph state", "label": "ready editor -> graph state"}
+  %% VC_EDGE {"source": "N3", "target": "N7", "source_port": "ready editor", "target_port": "selected node", "label": "ready editor -> selected node"}
+  %% VC_EDGE {"source": "N3", "target": "N8", "source_port": "ready editor", "target_port": "project mmd", "label": "ready editor -> project mmd"}
+  %% VC_EDGE {"source": "N4", "target": "N6", "source_port": "port interaction", "target_port": "mouse events", "label": "port interaction -> mouse events"}
+  %% VC_EDGE {"source": "N6", "target": "N5", "source_port": "EdgeItem", "target_port": "graph state", "label": "EdgeItem -> graph state"}
+  %% VC_EDGE {"source": "N7", "target": "N5", "source_port": "updated node", "target_port": "graph state", "label": "updated node -> graph state"}
+  %% VC_EDGE {"source": "N8", "target": "N5", "source_port": "project mmd", "target_port": "graph state", "label": "project mmd -> graph state"}
+  %% VC_EDGE {"source": "N5", "target": "N9", "source_port": "graph state", "target_port": "current mermaid text", "label": "graph state -> current mermaid text"}
+  %% VC_METADATA_END

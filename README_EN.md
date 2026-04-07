@@ -41,6 +41,19 @@ Please note:
 - [test_vibe_coding.py](test_vibe_coding.py) - The corresponding Python example script. (thanks to Grok！)
 - [program_flow.mmd](program_flow.mmd) - The runtime flowchart for this application itself.
 
+## App Screenshot
+
+![Running UI](UI_snapshot.png)
+
+## Interesting Experiment: Rebuild From Program Flow
+
+As a practical test, I rebuilt this project once only from [program_flow.mmd](program_flow.mmd) in a separate folder, [flow_rebuild](flow_rebuild), to validate the "flowchart-first, code-second" workflow.
+
+- Rebuild entry: [flow_rebuild/main.py](flow_rebuild/main.py)
+- Rebuild core logic: [flow_rebuild/app/editor_window.py](flow_rebuild/app/editor_window.py)
+- Rebuild graphics layer: [flow_rebuild/app/graphics_items.py](flow_rebuild/app/graphics_items.py)
+- Rebuild flowchart: [flow_rebuild/program_flow.mmd](flow_rebuild/program_flow.mmd)
+
 ## Project Structure
 
 - [main.py](main.py) - Application entry point.
@@ -103,6 +116,7 @@ Flowcharts make those concerns explicit and help with:
 - The interaction and visual design are intentionally simple.
 - It is useful for validating the idea, not for production use yet.
 - Mermaid import/export still depends on the current metadata format.
+- Most of this repository was written by GitHub Copilot (GPT-5.3-Codex) via vibe coding and has not been systematically reviewed by humans, so please do not expect production-grade code quality.
 
 ## License
 
