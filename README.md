@@ -14,6 +14,14 @@ Visual Vibe Coding is a proof-of-concept editor for describing software structur
 
 It explores a simple idea: instead of writing long, fragile prompt text for vibe coding, use structured diagrams to define modules, functions, I/O boundaries, and responsibilities. The goal is to make prompts easier to iterate, easier to collaborate on, and easier for large language models to understand.
 
+
+<img width="2297" height="1310" alt="image" src="https://github.com/user-attachments/assets/dd6093dd-c81e-4777-8952-c19cae871f75" />
+工具界面预览
+
+
+
+
+
 ## 为什么用框图做提示词
 
 1. 让提示词结构化、模块化，便于局部修改，也更适合多人协作优化。
@@ -101,6 +109,7 @@ python main.py
 3. 在节点里补充输入、输出和成员变量，尽量把行为边界写清楚。
 4. 用连线表达数据流和调用关系。
 5. 导出 `.mmd` 文件，作为后续 vibe coding 的结构化提示词。
+6. 随便找个能读.mmd的agent喂给它
 
 ## 设计思路
 
