@@ -14,6 +14,14 @@ Visual Vibe Coding is a proof-of-concept editor for describing software structur
 
 It explores a simple idea: instead of writing long, fragile prompt text for vibe coding, use structured diagrams to define modules, functions, I/O boundaries, and responsibilities. The goal is to make prompts easier to iterate, easier to collaborate on, and easier for large language models to understand.
 
+
+<img width="2297" height="1310" alt="image" src="https://github.com/user-attachments/assets/dd6093dd-c81e-4777-8952-c19cae871f75" />
+工具界面预览
+
+
+
+
+
 ## 为什么用框图做提示词
 
 1. 让提示词结构化、模块化，便于局部修改，也更适合多人协作优化。
