@@ -1,0 +1,47 @@
+flowchart LR
+  N4{{"键盘输入<br/><sub>从键盘读取一串输入，直到回车</sub><br/><sub>OUT: 原始字符串</sub>"}}
+  subgraph N5_GROUP["四则计算器"]
+    N5[/"四则计算器<br/><sub>进行四则混合运算的计算器</sub><br/><sub>MEM: 历史记录（字符串列表，保留最近五次运算）</sub>"/]
+    N6["字符过滤器<br/><sub>从输入的字符串中过滤出数字和四则运算算符，拼接成一个算式</sub><br/><sub>IN: 原始字符串</sub><br/><sub>OUT: 算式字符串</sub>"]
+    N7["运算器<br/><sub>对以字符串形式输入的算式进行计算，输出结果字符串。<br/>如若输入不合法，则输出“不合法结果，你个傻逼”</sub><br/><sub>IN: 算式字符串</sub><br/><sub>OUT: 结果字符串</sub>"]
+    N9["历史记录查询器<br/><sub>当检测到原始字符串中有“hst”字样时，从所属类的成员变量中读取历史记录并输出</sub><br/><sub>IN: 原始字符串</sub><br/><sub>OUT: 历史算式列表</sub>"]
+  end
+  N8{{"终端输出<br/><sub>在终端输出算式和计算结果，要用一些花哨的ascii绘画制作一个显示界面来显示输出</sub><br/><sub>IN: 算式字符串, 结果字符串, 历史算式列表</sub>"}}
+
+  %% I/O Connections
+  N4 --|"原始字符串 -> 原始字符串"|--> N6
+  N6 --|"算式字符串 -> 算式字符串"|--> N8
+  N7 --|"结果字符串 -> 结果字符串"|--> N8
+  N6 --|"算式字符串 -> 算式字符串"|--> N7
+  N4 --|"原始字符串 -> 原始字符串"|--> N9
+  N9 --|"历史算式列表 -> 历史算式列表"|--> N8
+
+  %% Style classes
+  classDef cls_program fill:#1b9aaa22,stroke:#1b9aaa,stroke-width:2px;
+  classDef cls_module fill:#2f7d3222,stroke:#2f7d32,stroke-width:2px;
+  classDef cls_class fill:#3a6ea522,stroke:#3a6ea5,stroke-width:2px;
+  classDef cls_struct fill:#6c4ab622,stroke:#6c4ab6,stroke-width:2px;
+  classDef cls_function fill:#cf5c3622,stroke:#cf5c36,stroke-width:2px;
+  classDef cls_interface fill:#9a031e22,stroke:#9a031e,stroke-width:2px;
+  classDef cls_process fill:#7b6d2622,stroke:#7b6d26,stroke-width:2px;
+  class N4 cls_interface;
+  class N5 cls_module;
+  class N6 cls_function;
+  class N7 cls_function;
+  class N8 cls_interface;
+  class N9 cls_function;
+
+  %% VC_METADATA_BEGIN
+  %% VC_NODE {"id": "N4", "type": "interface", "title": "\u952e\u76d8\u8f93\u5165", "description": "\u4ece\u952e\u76d8\u8bfb\u53d6\u4e00\u4e32\u8f93\u5165\uff0c\u76f4\u5230\u56de\u8f66", "inputs": [], "outputs": ["\u539f\u59cb\u5b57\u7b26\u4e32"], "members": [], "x": -469.0, "y": -64.0, "w": 158.0, "h": 202.0, "parent": null}
+  %% VC_NODE {"id": "N5", "type": "module", "title": "\u56db\u5219\u8ba1\u7b97\u5668", "description": "\u8fdb\u884c\u56db\u5219\u6df7\u5408\u8fd0\u7b97\u7684\u8ba1\u7b97\u5668", "inputs": [], "outputs": [], "members": ["\u5386\u53f2\u8bb0\u5f55\uff08\u5b57\u7b26\u4e32\u5217\u8868\uff0c\u4fdd\u7559\u6700\u8fd1\u4e94\u6b21\u8fd0\u7b97\uff09"], "x": -251.0, "y": -318.0, "w": 366.0, "h": 698.0, "parent": null}
+  %% VC_NODE {"id": "N6", "type": "function", "title": "\u5b57\u7b26\u8fc7\u6ee4\u5668", "description": "\u4ece\u8f93\u5165\u7684\u5b57\u7b26\u4e32\u4e2d\u8fc7\u6ee4\u51fa\u6570\u5b57\u548c\u56db\u5219\u8fd0\u7b97\u7b97\u7b26\uff0c\u62fc\u63a5\u6210\u4e00\u4e2a\u7b97\u5f0f", "inputs": ["\u539f\u59cb\u5b57\u7b26\u4e32"], "outputs": ["\u7b97\u5f0f\u5b57\u7b26\u4e32"], "members": [], "x": -195.0, "y": -230.0, "w": 251.0, "h": 185.0, "parent": "N5"}
+  %% VC_NODE {"id": "N7", "type": "function", "title": "\u8fd0\u7b97\u5668", "description": "\u5bf9\u4ee5\u5b57\u7b26\u4e32\u5f62\u5f0f\u8f93\u5165\u7684\u7b97\u5f0f\u8fdb\u884c\u8ba1\u7b97\uff0c\u8f93\u51fa\u7ed3\u679c\u5b57\u7b26\u4e32\u3002\n\u5982\u82e5\u8f93\u5165\u4e0d\u5408\u6cd5\uff0c\u5219\u8f93\u51fa\u201c\u4e0d\u5408\u6cd5\u7ed3\u679c\uff0c\u4f60\u4e2a\u50bb\u903c\u201d", "inputs": ["\u7b97\u5f0f\u5b57\u7b26\u4e32"], "outputs": ["\u7ed3\u679c\u5b57\u7b26\u4e32"], "members": [], "x": -181.0, "y": -21.0, "w": 223.0, "h": 231.0, "parent": "N5"}
+  %% VC_NODE {"id": "N8", "type": "interface", "title": "\u7ec8\u7aef\u8f93\u51fa", "description": "\u5728\u7ec8\u7aef\u8f93\u51fa\u7b97\u5f0f\u548c\u8ba1\u7b97\u7ed3\u679c\uff0c\u8981\u7528\u4e00\u4e9b\u82b1\u54e8\u7684ascii\u7ed8\u753b\u5236\u4f5c\u4e00\u4e2a\u663e\u793a\u754c\u9762\u6765\u663e\u793a\u8f93\u51fa", "inputs": ["\u7b97\u5f0f\u5b57\u7b26\u4e32", "\u7ed3\u679c\u5b57\u7b26\u4e32", "\u5386\u53f2\u7b97\u5f0f\u5217\u8868"], "outputs": [], "members": [], "x": 353.0, "y": -45.0, "w": 190.0, "h": 277.0, "parent": null}
+  %% VC_NODE {"id": "N9", "type": "function", "title": "\u5386\u53f2\u8bb0\u5f55\u67e5\u8be2\u5668", "description": "\u5f53\u68c0\u6d4b\u5230\u539f\u59cb\u5b57\u7b26\u4e32\u4e2d\u6709\u201chst\u201d\u5b57\u6837\u65f6\uff0c\u4ece\u6240\u5c5e\u7c7b\u7684\u6210\u5458\u53d8\u91cf\u4e2d\u8bfb\u53d6\u5386\u53f2\u8bb0\u5f55\u5e76\u8f93\u51fa", "inputs": ["\u539f\u59cb\u5b57\u7b26\u4e32"], "outputs": ["\u5386\u53f2\u7b97\u5f0f\u5217\u8868"], "members": [], "x": -180.0, "y": 230.0, "w": 210.0, "h": 120.0, "parent": "N5"}
+  %% VC_EDGE {"source": "N4", "target": "N6", "source_port": "\u539f\u59cb\u5b57\u7b26\u4e32", "target_port": "\u539f\u59cb\u5b57\u7b26\u4e32", "label": "\u539f\u59cb\u5b57\u7b26\u4e32 -> \u539f\u59cb\u5b57\u7b26\u4e32"}
+  %% VC_EDGE {"source": "N6", "target": "N8", "source_port": "\u7b97\u5f0f\u5b57\u7b26\u4e32", "target_port": "\u7b97\u5f0f\u5b57\u7b26\u4e32", "label": "\u7b97\u5f0f\u5b57\u7b26\u4e32 -> \u7b97\u5f0f\u5b57\u7b26\u4e32"}
+  %% VC_EDGE {"source": "N7", "target": "N8", "source_port": "\u7ed3\u679c\u5b57\u7b26\u4e32", "target_port": "\u7ed3\u679c\u5b57\u7b26\u4e32", "label": "\u7ed3\u679c\u5b57\u7b26\u4e32 -> \u7ed3\u679c\u5b57\u7b26\u4e32"}
+  %% VC_EDGE {"source": "N6", "target": "N7", "source_port": "\u7b97\u5f0f\u5b57\u7b26\u4e32", "target_port": "\u7b97\u5f0f\u5b57\u7b26\u4e32", "label": "\u7b97\u5f0f\u5b57\u7b26\u4e32 -> \u7b97\u5f0f\u5b57\u7b26\u4e32"}
+  %% VC_EDGE {"source": "N4", "target": "N9", "source_port": "\u539f\u59cb\u5b57\u7b26\u4e32", "target_port": "\u539f\u59cb\u5b57\u7b26\u4e32", "label": "\u539f\u59cb\u5b57\u7b26\u4e32 -> \u539f\u59cb\u5b57\u7b26\u4e32"}
+  %% VC_EDGE {"source": "N9", "target": "N8", "source_port": "\u5386\u53f2\u7b97\u5f0f\u5217\u8868", "target_port": "\u5386\u53f2\u7b97\u5f0f\u5217\u8868", "label": "\u5386\u53f2\u7b97\u5f0f\u5217\u8868 -> \u5386\u53f2\u7b97\u5f0f\u5217\u8868"}
+  %% VC_METADATA_END

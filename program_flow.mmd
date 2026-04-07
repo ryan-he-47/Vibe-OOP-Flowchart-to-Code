@@ -1,0 +1,85 @@
+flowchart LR
+  N1(["main.py<br/><sub>应用入口</sub><br/><sub>OUT: run()</sub>"])
+  N2["app/editor_window.py: run()<br/><sub>创建 QApplication，实例化 MermaidFlowEditor，启动事件循环</sub><br/><sub>IN: main.py</sub><br/><sub>OUT: Qt event loop</sub>"]
+  N3["MermaidFlowEditor.__init__()<br/><sub>初始化场景、视图、工具栏、属性面板、预览面板</sub><br/><sub>OUT: 已就绪编辑器窗口</sub>"]
+  N4["FlowGraphicsView<br/><sub>拦截鼠标点击、移动和离开事件</sub><br/><sub>IN: scene events</sub><br/><sub>OUT: port hover/click</sub>"]
+  N5["QGraphicsScene + NodeItem/EdgeItem<br/><sub>承载节点与连线，负责绘制和位置更新</sub><br/><sub>IN: 编辑操作</sub><br/><sub>OUT: 图形状态</sub>"]
+  N6["端口连线模式<br/><sub>输出端口 -> 输入端口，支持预览线和高亮</sub><br/><sub>IN: mouse clicks / hover</sub><br/><sub>OUT: EdgeItem</sub>"]
+  N7["节点编辑面板<br/><sub>修改标题、类型、输入、输出、成员、尺寸、描述</sub><br/><sub>IN: selected NodeItem</sub><br/><sub>OUT: 更新节点属性</sub>"]
+  N8["导入 / 导出 Mermaid<br/><sub>读取 .mmd 或写出 .mmd，并尽量恢复元数据</sub><br/><sub>IN: file dialog / metadata</sub><br/><sub>OUT: project .mmd</sub>"]
+  N9["预览面板<br/><sub>显示 generate_mermaid() 的当前文本</sub><br/><sub>IN: current scene</sub><br/><sub>OUT: Mermaid source</sub>"]
+  N11["calculator.mmd / test_vibe_coding.py<br/><sub>示例内容，展示提示词式流程图如何落地</sub><br/><sub>OUT: demo assets</sub>"]
+  N12["program_flow.mmd<br/><sub>本文件：程序自身的运行流程图</sub><br/><sub>OUT: 可直接导入的程序框图</sub>"]
+
+  %% Runtime flow
+  N1 --|"import run"|--> N2
+  N2 --|"instantiate"|--> N3
+  N3 --|"create"|--> N4
+  N3 --|"create"|--> N5
+  N3 --|"create"|--> N7
+  N3 --|"create"|--> N8
+  N3 --|"create"|--> N9
+
+  %% Interaction flow
+  N4 --|"hover / click"|--> N6
+  N6 --|"update highlights"|--> N5
+  N6 --|"create edge"|--> N5
+  N5 --|"selectionChanged"|--> N7
+  N7 --|"apply_properties_to_selected"|--> N5
+  N5 --|"node move / resize / nest"|--> N9
+  N8 --|"load / save"|--> N5
+  N5 --|"generate_mermaid()"|--> N9
+
+  %% Example and documentation links
+  N11 --|"reference"|--> N12
+  N12 --|"program model"|--> N2
+
+  %% Style classes
+  classDef cls_program fill:#1b9aaa22,stroke:#1b9aaa,stroke-width:2px;
+  classDef cls_module fill:#2f7d3222,stroke:#2f7d32,stroke-width:2px;
+  classDef cls_class fill:#3a6ea522,stroke:#3a6ea5,stroke-width:2px;
+  classDef cls_struct fill:#6c4ab622,stroke:#6c4ab6,stroke-width:2px;
+  classDef cls_function fill:#cf5c3622,stroke:#cf5c36,stroke-width:2px;
+  classDef cls_interface fill:#9a031e22,stroke:#9a031e,stroke-width:2px;
+  classDef cls_process fill:#7b6d2622,stroke:#7b6d26,stroke-width:2px;
+  class N1 cls_interface;
+  class N2 cls_function;
+  class N3 cls_class;
+  class N4 cls_class;
+  class N5 cls_module;
+  class N6 cls_process;
+  class N7 cls_process;
+  class N8 cls_process;
+  class N9 cls_interface;
+  class N11 cls_module;
+  class N12 cls_program;
+
+  %% VC_METADATA_BEGIN
+  %% VC_NODE {"id": "N1", "type": "interface", "title": "main.py", "description": "应用入口", "inputs": [], "outputs": ["run()"], "members": [], "x": -800.0, "y": -20.0, "w": 220.0, "h": 120.0, "parent": null}
+  %% VC_NODE {"id": "N2", "type": "function", "title": "app/editor_window.py: run()", "description": "创建 QApplication，实例化 MermaidFlowEditor，启动事件循环", "inputs": ["main.py"], "outputs": ["Qt event loop"], "members": [], "x": -520.0, "y": -20.0, "w": 330.0, "h": 140.0, "parent": null}
+  %% VC_NODE {"id": "N3", "type": "class", "title": "MermaidFlowEditor.__init__()", "description": "初始化场景、视图、工具栏、属性面板、预览面板", "inputs": [], "outputs": ["已就绪编辑器窗口"], "members": ["node_counter", "nodes", "edges", "port_connect_mode", "pending_source_port", "hovered_input_port", "hovered_output_port", "preview_scene_pos"], "x": -180.0, "y": -40.0, "w": 390.0, "h": 220.0, "parent": null}
+  %% VC_NODE {"id": "N4", "type": "class", "title": "FlowGraphicsView", "description": "拦截鼠标点击、移动和离开事件", "inputs": ["scene events"], "outputs": ["port hover/click"], "members": [], "x": -180.0, "y": 230.0, "w": 300.0, "h": 120.0, "parent": "N3"}
+  %% VC_NODE {"id": "N5", "type": "module", "title": "QGraphicsScene + NodeItem/EdgeItem", "description": "承载节点与连线，负责绘制和位置更新", "inputs": ["编辑操作"], "outputs": ["图形状态"], "members": [], "x": 240.0, "y": -190.0, "w": 350.0, "h": 160.0, "parent": null}
+  %% VC_NODE {"id": "N6", "type": "process", "title": "端口连线模式", "description": "输出端口 -> 输入端口，支持预览线和高亮", "inputs": ["mouse clicks / hover"], "outputs": ["EdgeItem"], "members": [], "x": 610.0, "y": -190.0, "w": 300.0, "h": 150.0, "parent": null}
+  %% VC_NODE {"id": "N7", "type": "process", "title": "节点编辑面板", "description": "修改标题、类型、输入、输出、成员、尺寸、描述", "inputs": ["selected NodeItem"], "outputs": ["更新节点属性"], "members": [], "x": 240.0, "y": 90.0, "w": 320.0, "h": 150.0, "parent": null}
+  %% VC_NODE {"id": "N8", "type": "process", "title": "导入 / 导出 Mermaid", "description": "读取 .mmd 或写出 .mmd，并尽量恢复元数据", "inputs": ["file dialog / metadata"], "outputs": ["project .mmd"], "members": [], "x": 610.0, "y": 90.0, "w": 330.0, "h": 150.0, "parent": null}
+  %% VC_NODE {"id": "N9", "type": "interface", "title": "预览面板", "description": "显示 generate_mermaid() 的当前文本", "inputs": ["current scene"], "outputs": ["Mermaid source"], "members": [], "x": 610.0, "y": 290.0, "w": 280.0, "h": 110.0, "parent": null}
+  %% VC_NODE {"id": "N11", "type": "module", "title": "calculator.mmd / test_vibe_coding.py", "description": "示例内容，展示提示词式流程图如何落地", "inputs": [], "outputs": ["demo assets"], "members": [], "x": -500.0, "y": 250.0, "w": 320.0, "h": 120.0, "parent": null}
+  %% VC_NODE {"id": "N12", "type": "program", "title": "program_flow.mmd", "description": "本文件：程序自身的运行流程图", "inputs": [], "outputs": ["可直接导入的程序框图"], "members": [], "x": -200.0, "y": 250.0, "w": 280.0, "h": 120.0, "parent": null}
+  %% VC_EDGE {"source": "N1", "target": "N2", "source_port": "run()", "target_port": "main.py", "label": "import run"}
+  %% VC_EDGE {"source": "N2", "target": "N3", "source_port": "Qt event loop", "target_port": "已就绪编辑器窗口", "label": "instantiate"}
+  %% VC_EDGE {"source": "N3", "target": "N4", "source_port": "已就绪编辑器窗口", "target_port": "port hover/click", "label": "create"}
+  %% VC_EDGE {"source": "N3", "target": "N5", "source_port": "已就绪编辑器窗口", "target_port": "图形状态", "label": "create"}
+  %% VC_EDGE {"source": "N3", "target": "N7", "source_port": "已就绪编辑器窗口", "target_port": "更新节点属性", "label": "create"}
+  %% VC_EDGE {"source": "N3", "target": "N8", "source_port": "已就绪编辑器窗口", "target_port": "project .mmd", "label": "create"}
+  %% VC_EDGE {"source": "N3", "target": "N9", "source_port": "已就绪编辑器窗口", "target_port": "Mermaid source", "label": "create"}
+  %% VC_EDGE {"source": "N4", "target": "N6", "source_port": "port hover/click", "target_port": "mouse clicks / hover", "label": "hover / click"}
+  %% VC_EDGE {"source": "N6", "target": "N5", "source_port": "EdgeItem", "target_port": "图形状态", "label": "update highlights"}
+  %% VC_EDGE {"source": "N6", "target": "N5", "source_port": "EdgeItem", "target_port": "图形状态", "label": "create edge"}
+  %% VC_EDGE {"source": "N5", "target": "N7", "source_port": "图形状态", "target_port": "selected NodeItem", "label": "selectionChanged"}
+  %% VC_EDGE {"source": "N7", "target": "N5", "source_port": "更新节点属性", "target_port": "编辑操作", "label": "apply_properties_to_selected"}
+  %% VC_EDGE {"source": "N5", "target": "N9", "source_port": "图形状态", "target_port": "current scene", "label": "generate_mermaid()"}
+  %% VC_EDGE {"source": "N8", "target": "N5", "source_port": "project .mmd", "target_port": "编辑操作", "label": "load / save"}
+  %% VC_EDGE {"source": "N11", "target": "N12", "source_port": "demo assets", "target_port": "可直接导入的程序框图", "label": "reference"}
+  %% VC_EDGE {"source": "N12", "target": "N2", "source_port": "可直接导入的程序框图", "target_port": "Qt event loop", "label": "program model"}
+  %% VC_METADATA_END
