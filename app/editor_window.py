@@ -154,6 +154,10 @@ class MermaidFlowEditor(QMainWindow):
         act_export.triggered.connect(self.export_mermaid_file)
         toolbar.addAction(act_export)
 
+        act_export_clean = QAction("导出纯净 .mmd", self)
+        act_export_clean.triggered.connect(self.export_clean_mermaid_file)
+        toolbar.addAction(act_export_clean)
+
         act_import = QAction("导入 .mmd", self)
         act_import.triggered.connect(self.import_mermaid_file)
         toolbar.addAction(act_import)
@@ -713,7 +717,7 @@ class MermaidFlowEditor(QMainWindow):
             self._render_node_tree(child, lines, indent + "  ")
         lines.append(f"{indent}end")
 
-    def generate_mermaid(self) -> str:
+    def generate_mermaid(self, include_metadata: bool = True) -> str:
         lines: List[str] = ["flowchart LR"]
 
         roots = self._children_of(None)
@@ -742,6 +746,9 @@ class MermaidFlowEditor(QMainWindow):
 
         for node in sorted(self.nodes.values(), key=lambda n: n.node_id):
             lines.append(f"  class {node.node_id} cls_{node.node_type};")
+
+        if not include_metadata:
+            return "\n".join(lines)
 
         lines.append("")
         lines.append("  %% VC_METADATA_BEGIN")
@@ -942,6 +949,22 @@ class MermaidFlowEditor(QMainWindow):
             file_obj.write(content)
 
         QMessageBox.information(self, "导出成功", f"已导出到：\n{output_path}")
+
+    def export_clean_mermaid_file(self) -> None:
+        content = self.generate_mermaid(include_metadata=False)
+        output_path, _ = QFileDialog.getSaveFileName(
+            self,
+            "导出纯净 Mermaid 文件",
+            "diagram_clean.mmd",
+            "Mermaid Files (*.mmd);;Text Files (*.txt)",
+        )
+        if not output_path:
+            return
+
+        with open(output_path, "w", encoding="utf-8") as file_obj:
+            file_obj.write(content)
+
+        QMessageBox.information(self, "导出成功", f"已导出纯净 mmd 到：\n{output_path}")
 
 
 def run() -> int:

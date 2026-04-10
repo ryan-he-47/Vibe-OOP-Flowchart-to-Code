@@ -34,6 +34,12 @@ Please note:
 - Port-based connections with output-to-input constraints.
 - Import and export of Mermaid `.mmd` files.
 - Embedded metadata in Mermaid text to preserve positions, sizes, parent-child relationships, and connections where possible.
+- One-click export of **clean `.mmd`** without custom metadata blocks (standard Mermaid only), which is easier for LLMs to parse and usually cheaper in token usage.
+
+## Update Highlights (This Release)
+
+- Added "clean `.mmd` export" that removes `VC_METADATA` comment blocks.
+- Better for LLM/agent prompting: less irrelevant context, better readability, and lower token cost.
 
 ## Examples
 
@@ -91,6 +97,7 @@ python main.py
 3. Fill in inputs, outputs, and member variables to make boundaries explicit.
 4. Connect nodes to represent data flow and dependencies.
 5. Export `.mmd` files as structured prompt material for later vibe coding work.
+6. For LLM prompting, prefer the clean `.mmd` export to reduce token usage.
 
 ## Design Goal
 

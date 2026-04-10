@@ -46,6 +46,12 @@ It explores a simple idea: instead of writing long, fragile prompt text for vibe
 - 通过端口建立连接，强调输出到输入的约束关系。
 - 支持导入和导出 Mermaid `.mmd` 文件。
 - 在 Mermaid 文本中嵌入元数据，尽量保留节点位置、尺寸、父子关系和连线信息。
+- 支持一键导出**无自定义元数据**的纯净 `.mmd`（仅保留标准 Mermaid 内容），更利于大模型直接理解，也更省 token。
+
+## 更新亮点（本次）
+
+- 新增“导出纯净 `.mmd`”功能：可输出不含 `VC_METADATA` 注释块的文件。
+- 适合直接喂给支持 Mermaid 的大模型或 Agent，减少无关上下文，降低 token 开销。
 
 ## 示例文件
 
@@ -110,6 +116,7 @@ python main.py
 4. 用连线表达数据流和调用关系。
 5. 导出 `.mmd` 文件，作为后续 vibe coding 的结构化提示词。
 6. 随便找个能读.mmd的agent喂给它
+7. 如果面向大模型投喂，优先使用“导出纯净 `.mmd`”版本，通常更省 token。
 
 ## 设计思路
 
