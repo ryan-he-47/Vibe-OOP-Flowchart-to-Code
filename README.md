@@ -69,9 +69,9 @@ It explores a simple idea: instead of writing long, fragile prompt text for vibe
 
 ![程序运行界面](UI_snapshot.png)
 
-## 这次有趣实践：按程序流程图重实现
+## 有趣实践：按程序流程图重实现
 
-这次做了一个小实验：只根据 [program_flow.mmd](program_flow.mmd) 的运行流程描述，在 [flow_rebuild](flow_rebuild) 里重新实现了一版可运行原型，用来验证“先流程图、后代码”的可用性。
+做了一个小实验：只根据这个项目本身 [program_flow.mmd](program_flow.mmd) 的运行流程描述，让copilot在 [flow_rebuild](flow_rebuild) 里重新实现了一版可运行原型，用来验证“先流程图、后代码”的可用性。
 
 - 重实现入口： [flow_rebuild/main.py](flow_rebuild/main.py)
 - 重实现主逻辑： [flow_rebuild/app/editor_window.py](flow_rebuild/app/editor_window.py)
